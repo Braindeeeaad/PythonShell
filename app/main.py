@@ -7,7 +7,7 @@ def handle_response(line) -> bool:
             if command[1]=="0":
                 return False
         case "echo":
-            sys.stdout.write(f"{command[1]}\n")
+            sys.stdout.write(f"{' '.join(map(str,command[1:]))}\n")
             return True
 
     sys.stdout.write(f"{line}: command not found\n")

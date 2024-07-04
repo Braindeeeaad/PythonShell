@@ -15,6 +15,7 @@ def handle_response(line) -> bool:
             sys.stdout.write(f"{' '.join(map(str,command[1:]))}\n")
             return True
         case "type":
+            print(typeResponse(command[1]))
             sys.stdout.write(typeResponse(command[1]))
             return True
 

@@ -17,7 +17,7 @@ def handle_Path(command,path,line):
 
         if os.path.isdir(full_path):
             return f"{command} is {full_path}\n"
-    print(full_path)
+    print(f"fullpath:{full_path}")
     return f"{command}: not found\n"
 def handle_type(command,path):
     builtin_list = ["echo","exit","type"]

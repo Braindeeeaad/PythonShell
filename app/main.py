@@ -14,8 +14,8 @@ def handle_Path(command,path,line,n):
 
         if os.access(full_path, os.X_OK):
             print(f"Fullpath: {full_path}")
-            output = subprocess.run([full_path]+args, capture_output=True , text=True)
-            return output.stdout
+            os.system(line)
+            return ''
 
         if os.path.isdir(full_path):
             return f"{command} is {full_path}\n"
@@ -42,7 +42,7 @@ def handle_response(line,path) -> bool:
                 sys.stdout.write(handle_type(command[1],path,command,n=1))
             return True
         case _:
-            sys.stdout.write(handle_type(command[0], path, command, n=0))
+            sys.stdout.write(handle_type(command[0], path, line, n=0))
             return True
 
     sys.stdout.write(f"{line}: command not found\n")

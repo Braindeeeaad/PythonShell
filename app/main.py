@@ -36,6 +36,9 @@ def handle_response(line,path) -> bool:
             if(text!=''):
                 sys.stdout.write(handle_type(command[1],path,line))
             return True
+        case "pwd":
+            sys.stdout.write(os.getcwd()+"\n")
+            return True
         case _:
             sys.stdout.write(handle_Path(command[0], path, line))
             return True

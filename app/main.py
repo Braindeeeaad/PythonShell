@@ -8,11 +8,13 @@ def logging(text):
 
 def handle_Path(command,path,line,n):
     full_path = ""
+    args = line[n+1]
     for directory in path:
         full_path = os.path.join(directory,command)
 
         if os.access(full_path, os.X_OK):
-            output = subprocess.run([full_path]+line[n+1], capture_output=True , text=True)
+            print(f"Fullpath: {full_path}")
+            output = subprocess.run([full_path]+args, capture_output=True , text=True)
             return output.stdout
 
         if os.path.isdir(full_path):

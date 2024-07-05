@@ -7,15 +7,17 @@ def logging(text):
         file.write(text)
 
 def handle_Path(command,path,line):
+    full_path = ""
     for directory in path:
         full_path = os.path.join(directory,command)
+
         if os.access(full_path, os.X_OK):
             subprocess.run(full_path, input=line[2])
             return ''
 
         if os.path.isdir(full_path):
             return f"{command} is {full_path}\n"
-
+    print(full_path)
     return f"{command}: not found\n"
 def handle_type(command,path):
     builtin_list = ["echo","exit","type"]

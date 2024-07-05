@@ -12,11 +12,12 @@ def handle_Path(command,path,line,n):
         full_path = os.path.join(directory,command)
 
         if os.access(full_path, os.X_OK):
-            subprocess.run(full_path, input=line[n+1])
-            return ''
+            output = subprocess.run([full_path]+line[n+1], capture_output=True , text=True)
+            return output.stdout
 
         if os.path.isdir(full_path):
             return f"{command} is {full_path}\n"
+
     print(f"fullpath:{full_path}")
     return f"{command}: not found\n"
 def handle_type(command,path):

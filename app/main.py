@@ -43,7 +43,7 @@ def main():
             sys.stdout.flush()
 
             # Wait for user input
-            path_env = os.environ.get('Path', '')
+            path_env = os.environ.get('PATH')
             logging(f"Path Recieved: {path_env}")
             line = input()
             if not handle_response(line,path_env.split(":")):

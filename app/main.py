@@ -1,11 +1,18 @@
+import os
 import sys
 
-def typeResponse(arg):
+def handle_Path(command,path):
+    for directory in path:
+        full_path = os.path.join(directory,command)
+        if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+            return f"{command} is {full_path}"
+    return f"{command}: not found"
+def handle_type(command,path):
     builtin_list = ["echo","exit","type"]
-    if arg in builtin_list:
-        return f"{arg} is a shell builtin\n"
-    return f"{arg}: not found\n"
-def handle_response(line) -> bool:
+    if command in builtin_list:
+        return f"{command} is a shell builtin\n"
+    return handle_Path(command,path)
+def handle_response(line,path) -> bool:
     command = line.split(" ")
     match(command[0]):
         case "exit":
@@ -15,25 +22,24 @@ def handle_response(line) -> bool:
             sys.stdout.write(f"{' '.join(map(str,command[1:]))}\n")
             return True
         case "type":
-            sys.stdout.write(typeResponse(command[1]))
+            sys.stdout.write(handle_type(command[1]),path)
             return True
 
     sys.stdout.write(f"{line}: command not found\n")
     return True
-def repl():
+
+
+
+def main():
     while True:
         sys.stdout.write("$ ")
         sys.stdout.flush()
 
         # Wait for user input
+        path_env = os.environ.get('Path', '')
         line = input()
-        if not handle_response(line):
+        if not handle_response(line,path_env.split(":")):
             return
-
-
-
-def main():
-    repl()
 
 
 

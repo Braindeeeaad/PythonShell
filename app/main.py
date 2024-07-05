@@ -11,9 +11,11 @@ def handle_Path(command,path,line,n):
     args = line[n+1]
     for directory in path:
         full_path = os.path.join(directory,command)
-        if os.access(full_path, os.X_OK) and os.path.isfile(full_path):
+        if os.access(full_path, os.X_OK):
             os.system(line)
             return ''
+        if os.path.isdir(full_path):
+            return f'{command} is {full_path}'
     return f"{command}: not found\n"
 def handle_type(command,path):
     builtin_list = ["echo","exit","type"]

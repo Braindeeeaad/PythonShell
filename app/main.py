@@ -4,6 +4,7 @@ import sys
 def handle_Path(command,path):
     for directory in path:
         full_path = os.path.join(directory,command)
+        print(f"Full Path:{full_path}")
         if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
             return f"{command} is {full_path}\n"
     return f"{command}: not found\n"
@@ -39,6 +40,7 @@ def main():
 
             # Wait for user input
             path_env = os.environ.get('Path', '')
+            print(f"Path Read: {path_env}")
             line = input()
             if not handle_response(line,path_env.split(":")):
                 return

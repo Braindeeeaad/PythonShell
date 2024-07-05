@@ -6,14 +6,13 @@ def logging(text):
     with open('log.text','w') as file:
         file.write(text)
 
-def handle_Path(commands,path,line):
-    command = commands[1]
+def handle_Path(command,path,line):
     for directory in path:
         full_path = os.path.join(directory,command)
         if os.path.isfile(full_path):
 
             if os.access(full_path, os.X_OK):
-                subprocess.run(full_path, input=commands[2])
+                subprocess.run(full_path, input=line[2])
                 return ''
 
             return f"{command} is {full_path}\n"
@@ -36,7 +35,7 @@ def handle_response(line,path) -> bool:
         case "type":
             text = handle_type(command[1],path)
             if(text!=''):
-                sys.stdout.write(handle_type(command,path))
+                sys.stdout.write(handle_type(command[1],path,command))
             return True
 
     sys.stdout.write(f"{line}: command not found\n")

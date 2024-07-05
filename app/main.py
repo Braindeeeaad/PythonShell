@@ -9,12 +9,11 @@ def logging(text):
 def handle_Path(command,path,line):
     for directory in path:
         full_path = os.path.join(directory,command)
-        if os.path.isfile(full_path):
+        if os.access(full_path, os.X_OK):
+            subprocess.run(full_path, input=line[2])
+            return ''
 
-            if os.access(full_path, os.X_OK):
-                subprocess.run(full_path, input=line[2])
-                return ''
-
+        if os.path.isdir(full_path):
             return f"{command} is {full_path}\n"
 
     return f"{command}: not found\n"

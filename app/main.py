@@ -11,7 +11,6 @@ def change_directory_protected(changeTo):
     try:
         if(changeTo=="~"):
             home = str(Path.home())
-            print(home)
             os.chdir(home)
         else:
             os.chdir(changeTo)

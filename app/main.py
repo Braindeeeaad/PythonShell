@@ -1,14 +1,20 @@
 import os
 import sys
 import subprocess
+from pathlib import Path
 
 def logging(text):
     with open('log.text','w') as file:
         file.write(text)
 
-def change_directory(changeTo):
+def change_directory_protected(changeTo):
     try:
-        os.chdir(changeTo)
+        if(changeTo=="~"):
+            home = str(Path.home())
+            print(home)
+            os.chdir(home)
+        else:
+            os.chdir(changeTo)
     except:
         sys.stdout.write(f"{changeTo}: No such file or directory\n")
 
@@ -48,7 +54,7 @@ def handle_response(line,path) -> bool:
             sys.stdout.write(os.getcwd()+"\n")
             return True
         case "cd":
-            change_directory(command[1])
+            change_directory_unprotected(command[1])
             return True
         case _:
             sys.stdout.write(handle_Path(command[0], path, line))

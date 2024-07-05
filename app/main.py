@@ -35,7 +35,7 @@ def handle_response(line,path) -> bool:
                 sys.stdout.write(handle_type(command[1],path,command,n=1))
             return True
         case _:
-            sys.stdout.write(handle_type(command[0], path, line, n=0))
+            sys.stdout.write(handle_Path(command[0], path, line, n=0))
             return True
 
     sys.stdout.write(f"{line}: command not found\n")

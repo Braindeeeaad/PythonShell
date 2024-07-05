@@ -10,7 +10,7 @@ def change_directory(changeTo):
     try:
         os.chdir(changeTo)
     except:
-        sys.stdout.write(f"{changeTo}: dir not found\n")
+        sys.stdout.write(f"{changeTo}: No such file or directory\n")
 
 def handle_Path(command,path,line):
     full_path = ""

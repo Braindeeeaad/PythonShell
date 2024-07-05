@@ -11,9 +11,8 @@ def handle_Path(command,path,line,n):
     args = line[n+1]
     for directory in path:
         full_path = os.path.join(directory,command)
-
+        print('helo')
         if os.access(full_path, os.X_OK):
-            print(f"Fullpath: {full_path}")
             os.system(line)
             return ''
 

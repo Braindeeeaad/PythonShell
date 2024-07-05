@@ -54,7 +54,7 @@ def handle_response(line,path) -> bool:
             sys.stdout.write(os.getcwd()+"\n")
             return True
         case "cd":
-            change_directory_unprotected(command[1])
+            change_directory_protected(command[1])
             return True
         case _:
             sys.stdout.write(handle_Path(command[0], path, line))

@@ -1,16 +1,23 @@
 import os
 import sys
+import subprocess
 
 def logging(text):
     with open('log.text','w') as file:
         file.write(text)
 
-def handle_Path(command,path):
+def handle_Path(commands,path,line):
+    command = commands[1]
     for directory in path:
         full_path = os.path.join(directory,command)
-        logging(f"Full Path:{full_path}")
-        if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+        if os.path.isfile(full_path):
+
+            if os.access(full_path, os.X_OK):
+                subprocess.run(full_path, input=commands[2])
+                return ''
+
             return f"{command} is {full_path}\n"
+
     return f"{command}: not found\n"
 def handle_type(command,path):
     builtin_list = ["echo","exit","type"]
@@ -27,7 +34,9 @@ def handle_response(line,path) -> bool:
             sys.stdout.write(f"{' '.join(map(str,command[1:]))}\n")
             return True
         case "type":
-            sys.stdout.write(handle_type(command[1],path))
+            text = handle_type(command[1],path)
+            if(text!=''):
+                sys.stdout.write(handle_type(command,path))
             return True
 
     sys.stdout.write(f"{line}: command not found\n")
@@ -44,7 +53,6 @@ def main():
 
             # Wait for user input
             path_env = os.environ.get('PATH')
-            logging(f"Path Recieved: {path_env}")
             line = input()
             if not handle_response(line,path_env.split(":")):
                 return

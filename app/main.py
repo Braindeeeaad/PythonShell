@@ -6,6 +6,12 @@ def logging(text):
     with open('log.text','w') as file:
         file.write(text)
 
+def change_directory(changeTo):
+    try:
+        os.chdir(changeTo)
+    except:
+        sys.stdout.write(f"{changeTo}: dir not found\n")
+
 def handle_Path(command,path,line):
     full_path = ""
     for directory in path:
@@ -22,6 +28,8 @@ def handle_type(command,path,line):
     if command in builtin_list:
         return f"{command} is a shell builtin\n"
     return handle_Path(command,path,line)
+
+
 def handle_response(line,path) -> bool:
     command = line.split(" ")
     match(command[0]):
@@ -38,6 +46,9 @@ def handle_response(line,path) -> bool:
             return True
         case "pwd":
             sys.stdout.write(os.getcwd()+"\n")
+            return True
+        case "cd":
+            change_directory(command[1])
             return True
         case _:
             sys.stdout.write(handle_Path(command[0], path, line))

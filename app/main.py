@@ -17,11 +17,11 @@ def handle_Path(command,path,line):
             except:
                 return f'{command} is {full_path}'
     return f"{command}: not found\n"
-def handle_type(command,path):
+def handle_type(command,path,line):
     builtin_list = ["echo","exit","type"]
     if command in builtin_list:
         return f"{command} is a shell builtin\n"
-    return handle_Path(command,path)
+    return handle_Path(command,path,line)
 def handle_response(line,path) -> bool:
     command = line.split(" ")
     match(command[0]):
@@ -32,7 +32,7 @@ def handle_response(line,path) -> bool:
             sys.stdout.write(f"{' '.join(map(str,command[1:]))}\n")
             return True
         case "type":
-            text = handle_type(command[1],path)
+            text = handle_type(command[1],path,line)
             if(text!=''):
                 sys.stdout.write(handle_type(command[1],path,line))
             return True
